@@ -1,4 +1,4 @@
-\# Website Visit Counter
+# Website Visit Counter
 
 An Azure Functions Python application that counts website visits using an HTTP-triggered function.
 
