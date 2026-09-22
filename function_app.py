@@ -27,3 +27,21 @@ def visits(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocume
         outputDocument.set(func.Document(countItem))
 
     return func.HttpResponse(body=json.dumps({"count": countItem['count']}), status_code=200)
+
+
+@app.route(route="get_visits", methods=["GET"])
+@app.cosmos_db_input(arg_name="inputDocument",
+                     database_name="visit-counter-db",
+                     container_name="counter-container",
+                     id="count",
+                     partition_key="count",
+                     connection="connection_key")
+def get_visits(req: func.HttpRequest, inputDocument: func.DocumentList) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
+
+    if not inputDocument:
+        return func.HttpResponse(body=json.dumps({"count": 0}), status_code=200)
+    else:
+        countItem = inputDocument[0]
+    
+    return func.HttpResponse(body=json.dumps({"count": countItem['count']}), status_code=200)
