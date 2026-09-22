@@ -44,7 +44,13 @@ The local HTTP endpoint is typically available at `http://localhost:7071`.
 Send a request to the deployed function endpoint to register a visit and retrieve the count:
 
 ```bash
-curl http://localhost:7071/api/visits
+curl http://localhost:7071/api/visits -X POST
+```
+
+or send a GET request to retrieve the count with no increment to database:
+
+```bash
+curl http://localhost:7071/api/get_visits
 ```
 
 The response contains the current number of visits. The exact route and response format depend on the function implementation.
