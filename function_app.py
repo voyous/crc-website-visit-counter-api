@@ -4,6 +4,7 @@ import json
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
+# Increments the visit count in Cosmos DB and returns the updated count.
 @app.route(route="visits", methods=["POST"])
 @app.cosmos_db_input(arg_name="inputDocument",
                      database_name="visit-counter-db",
@@ -28,7 +29,7 @@ def visits(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocume
 
     return func.HttpResponse(body=json.dumps({"count": countItem['count']}), status_code=200)
 
-
+# Retrieves the current visit count from Cosmos DB and returns it.
 @app.route(route="get_visits", methods=["GET"])
 @app.cosmos_db_input(arg_name="inputDocument",
                      database_name="visit-counter-db",
