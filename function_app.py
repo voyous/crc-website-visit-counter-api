@@ -2,7 +2,7 @@ import azure.functions as func
 import logging
 import json
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 # Increments the visit count in Cosmos DB and returns the updated count.
 @app.route(route="visits", methods=["POST"])
