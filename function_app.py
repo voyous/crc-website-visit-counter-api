@@ -1,20 +1,21 @@
 import azure.functions as func
 import logging
 import json
+import os
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 # Increments the visit count in Cosmos DB and returns the updated count.
 @app.route(route="visits", methods=["POST"])
 @app.cosmos_db_input(arg_name="inputDocument",
-                     database_name="DATABASE_NAME",
-                     container_name="CONTAINER_NAME",
+                     database_name=os.environ['DATABASE_NAME'],
+                     container_name=os.environ['DB_CONTAINER_NAME'],
                      id="count",
                      partition_key="count",
                      connection="connection_key")
 @app.cosmos_db_output(arg_name="outputDocument",
-                      database_name="DATABASE_NAME",
-                      container_name="CONTAINER_NAME",
+                      database_name=os.environ['DATABASE_NAME'],
+                      container_name=os.environ['DB_CONTAINER_NAME'],
                       connection="connection_key")
 def visits(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocument: func.Out[func.Document]) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -32,8 +33,8 @@ def visits(req: func.HttpRequest, inputDocument: func.DocumentList, outputDocume
 # Retrieves the current visit count from Cosmos DB and returns it.
 @app.route(route="get_visits", methods=["GET"])
 @app.cosmos_db_input(arg_name="inputDocument",
-                     database_name="DATABASE_NAME",
-                     container_name="CONTAINER_NAME",
+                     database_name=os.environ['DATABASE_NAME'],
+                     container_name=os.environ['DB_CONTAINER_NAME'],
                      id="count",
                      partition_key="count",
                      connection="connection_key")
