@@ -61,7 +61,7 @@ Create an Azure Function App configured for Python, then deploy from the project
 
 ```bash
 az login
-func azure functionapp publish <FUNCTION_APP_NAME>
+func azure functionapp publish <FUNCTION_APP_NAME> --python
 ```
 
 Replace `<FUNCTION_APP_NAME>` with the name of your Azure Function App.
